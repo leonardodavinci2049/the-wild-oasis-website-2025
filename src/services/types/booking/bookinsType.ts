@@ -4,9 +4,8 @@ export type BookingStatus =
   | "checked-in"
   | "checked-out";
 
-
 export interface InsertBookingType {
- id: number;
+  id: number;
   created_at?: string;
   startDate?: string;
   endDate?: string;
@@ -20,7 +19,7 @@ export interface InsertBookingType {
   isPaid?: boolean;
   observations?: string | null;
   cabinId?: number;
-  guestId?: number;  
+  guestId?: number;
 }
 
 export interface UpdateBookingType {
@@ -40,7 +39,6 @@ export interface UpdateBookingType {
   cabinId?: number;
   guestId?: number;
 }
-
 
 export interface BookingType {
   id: number;
@@ -70,8 +68,6 @@ export interface BookingType {
   };
 }
 
-
-  
 export interface BookingsType {
   id: number;
   created_at: string;
@@ -92,8 +88,18 @@ export interface BookingsType {
   guests: { fullName: string; email: string }; // Certifique-se de que o tipo aqui reflete os dados reais
 }
 
-
-
+export interface BookingsReservationType {
+  id: number;
+  created_at: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  totalPrice: number;
+  cabinPrice: number;
+  extrasPrice?: number;
+  numGuests: number;
+  cabins: { name: string; image: string };
+}
 
 export interface BookingFilter {
   field: string;

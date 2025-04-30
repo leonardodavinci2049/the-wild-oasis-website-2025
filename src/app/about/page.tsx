@@ -1,7 +1,5 @@
-import ImageFillContainer from "@/Common_components/ImageFillContainer";
 import { getCabins } from "@/services/apiCabins";
 import Image from "next/image";
-
 
 export const metadata = {
   title: "About",
@@ -9,11 +7,8 @@ export const metadata = {
     "Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests",
 };
 
-
 const page = async () => {
   const cabins = await getCabins();
-
-  console.log('cabins : ',cabins);
 
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
@@ -44,18 +39,19 @@ const page = async () => {
         </div>
       </div>
 
-      <div className="col-span-2">
-        <ImageFillContainer
-          src="/about-1.jpg"
+      <div className="relative h-full col-span-2">
+        <Image
+          src="/images/about-1.jpg"
           alt="Family sitting around a fire pit in front of cabin"
-          quality={80}         
+          quality={80}
+          fill
+          className="object-cover"
         />
-   
       </div>
 
       <div className="relative aspect-square col-span-2">
         <Image
-          src="/about-2.jpg"
+          src="/images/about-2.jpg"
           fill
           className="object-cover"
           alt="Family that manages The Wild Oasis"

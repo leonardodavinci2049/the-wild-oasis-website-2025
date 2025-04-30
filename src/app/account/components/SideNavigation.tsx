@@ -4,7 +4,7 @@ import {
   HomeIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import SignOutButton from "./SignOutButton";
+import SignOutButton from "@/Common_components/SignOutButton";
 
 const navLinks = [
   {
