@@ -24,11 +24,15 @@ export async function getCabin(id: number) {
 }
 
 export const getCabins = async function () {
-  const { data, error } = await supabase
+  const { data, error } = await supabase.from("cabins").select("*");
+
+
+
+/*   const { data, error } = await supabase
     .from("cabins")
     .select("id, name, maxCapacity, regularPrice, discount, image")
     .order("name");
-
+  console.log('datacabins : ',data); */
   // For testing
   // await new Promise((res) => setTimeout(res, 2000));
 
