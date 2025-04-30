@@ -1,7 +1,7 @@
 
 // Let's imagine your colleague already built this component 😃
 
-import { getCountries } from "@/services/apiCountries";
+//import { getCountries } from "@/services/apiCountries";
 
 type SelectCountryProps = {
   defaultCountry: string;
@@ -11,7 +11,8 @@ type SelectCountryProps = {
 };
 
 async function SelectCountry({ defaultCountry, name, id, className }: SelectCountryProps) {
-  const countries = await getCountries();
+  //const countries = await getCountries();
+  const countries: { name: string; flag: string }[] = [];
   const flag =
     countries.find((country: { name: string; flag: string }) => country.name === defaultCountry)?.flag ?? '';
 
