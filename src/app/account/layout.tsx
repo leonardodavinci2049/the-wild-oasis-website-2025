@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactNode } from "react";
-import SideNavigation from "./components/SideNavigation";
+import SideNavigation from "./_components/SideNavigation";
 
 type LayoutProps = {
   children: ReactNode;

@@ -1,21 +1,32 @@
-
 // Let's imagine your colleague already built this component 😃
+
+import { getCountries } from "@/services/apiCountries";
 
 //import { getCountries } from "@/services/apiCountries";
 
 type SelectCountryProps = {
   defaultCountry: string;
   name: string;
+  flag2: string;
   id: string;
   className?: string;
 };
 
-async function SelectCountry({ defaultCountry, name, id, className }: SelectCountryProps) {
-  //const countries = await getCountries();
-  const countries: { name: string; flag: string }[] = [];
+async function SelectCountry({
+  defaultCountry,
+  name,
+  flag2,
+  id,
+  className,
+}: SelectCountryProps) {
+  const countries = await getCountries();
   const flag =
-    countries.find((country: { name: string; flag: string }) => country.name === defaultCountry)?.flag ?? '';
+    countries.find(
+      (country: { name: string; flag: string }) =>
+        country.name === defaultCountry
+    )?.flag ?? flag2;
 
+  //  console.log("countries", countries);
   return (
     <select
       name={name}
@@ -24,7 +35,7 @@ async function SelectCountry({ defaultCountry, name, id, className }: SelectCoun
       defaultValue={`${defaultCountry}%${flag}`}
       className={className}
     >
-      <option value=''>Select country...</option>
+      <option value="">Select country...</option>
       {countries.map((c: { name: string; flag: string }) => (
         <option key={c.name} value={`${c.name}%${c.flag}`}>
           {c.name}
@@ -35,3 +46,4 @@ async function SelectCountry({ defaultCountry, name, id, className }: SelectCoun
 }
 
 export default SelectCountry;
+
