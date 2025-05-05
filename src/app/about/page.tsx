@@ -1,5 +1,8 @@
 import { getCabins } from "@/services/apiCabins";
 import Image from "next/image";
+import Link from "next/link";
+
+ export const revalidate = 86400; // revalidate every 60 seconds
 
 export const metadata = {
   title: "About",
@@ -79,14 +82,12 @@ const page = async () => {
             is like coming home.
           </p>
 
-          <div>
-            <a
-              href="/cabins"
-              className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
-            >
-              Explore our luxury cabins
-            </a>
-          </div>
+          <Link
+            href="/cabins"
+            className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
+          >
+            Explore our luxury cabins
+          </Link>
         </div>
       </div>
     </div>

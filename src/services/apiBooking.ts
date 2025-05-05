@@ -56,7 +56,7 @@ export async function getBookedDatesByCabinId(cabinId: number) {
   }
 
   // Converting to actual dates to be displayed in the date picker
-  const bookedDates = data
+  const bookedDates: Date[] = data
     .map((booking: { startDate: string; endDate: string }) => {
       return eachDayOfInterval({
         start: new Date(booking.startDate),
