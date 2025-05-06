@@ -1,59 +1,50 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
+import { DateRange } from "react-day-picker";
 
-/**
- * Representa o intervalo de datas de uma reserva
- * @property {Date | null} from - Data de início da reserva
- * @property {Date | null} to - Data de término da reserva
- */
-type DateRange = {
-  from: Date | null;
-  to: Date | null;
+type ReservationContextProviderProps = PropsWithChildren;
+export type RangeState = DateRange | undefined;
+type ReservationContextValues = {
+  range: RangeState;
+  setRange: Dispatch<SetStateAction<RangeState>>;
+  resetRange: () => void;
+} | null;
+
+const ReservationContext = createContext<ReservationContextValues>(null);
+
+const rangeStateInitialValue = {
+  from: undefined,
+  to: undefined,
 };
 
-/**
- * Interface do contexto de reserva
- */
-interface ReservationContextType {
-  /** Intervalo de datas selecionado */
-  range: DateRange;
-  /** Função para atualizar o intervalo de datas */
-  setRange: React.Dispatch<React.SetStateAction<DateRange>>;
-  /** Função para resetar o intervalo de datas */
-  resetRange: () => void;
-  /** Verifica se o intervalo de datas está completo */
-  isRangeComplete: boolean;
-}
+function ReservationContextProvider({
+  children,
+}: ReservationContextProviderProps) {
+  const [range, setRange] = useState<RangeState>(rangeStateInitialValue);
 
-const initialState: DateRange = { from: null, to: null };
-
-const ReservationContext = createContext<ReservationContextType | undefined>(undefined);
-
-function ReservationProvider({ children }: { children: React.ReactNode }) {
-  const [range, setRange] = useState<DateRange>(initialState);
-  const resetRange = () => setRange(initialState);
-  
-  // Propriedade computada para verificar se o intervalo está completo
-  const isRangeComplete = Boolean(range.from && range.to);
+  const resetRange = () => setRange(rangeStateInitialValue);
 
   return (
-    <ReservationContext.Provider value={{ range, setRange, resetRange, isRangeComplete }}>
+    <ReservationContext.Provider value={{ range, setRange, resetRange }}>
       {children}
     </ReservationContext.Provider>
   );
 }
 
-/**
- * Hook personalizado para acessar o contexto de reserva
- * @throws {Error} Se usado fora do ReservationProvider
- */
-function useReservation(): ReservationContextType {
+function useReservationContext() {
   const context = useContext(ReservationContext);
-  if (context === undefined)
-    throw new Error("useReservation deve ser usado dentro de um ReservationProvider");
+  if (!context)
+    throw new Error("Reservation Context was called outside of its provider");
   return context;
 }
 
-export { ReservationProvider, useReservation };
-export type { DateRange };
+export { useReservationContext };
+export default ReservationContextProvider;

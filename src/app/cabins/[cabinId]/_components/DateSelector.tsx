@@ -1,46 +1,69 @@
 "use client";
 
-import { DayPicker } from "react-day-picker";
+
+import { DateRange, DayPicker } from "react-day-picker";
+
+
+import {
+  differenceInDays,
+  isPast,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
+
 
 import { SettingsType } from "@/services/types/setting/SettingsType";
-import { CabinType } from "@/services/types/cabin/CabinsType";
-import { useReservation } from "../../_context/ReservationContext";
+import { CabinReservationType } from "@/services/types/cabin/CabinsType";
+import { useReservationContext } from "../../_context/ReservationContext";
 
 // Mantida a interface pois agora estamos em um arquivo TSX
 interface DateSelectorProps {
   settings: SettingsType;
-  cabin?: CabinType;
-  bookedDates?: Date[];
+  cabin: CabinReservationType;
+  bookedDates: Date[];
 }
 
-const DateSelector = ({ settings, cabin }: DateSelectorProps) => {
-  const { range, setRange, resetRange } = useReservation();
+function isAlreadyBooked(range: DateRange | undefined, datesArr: Date[]) {
+  if (!range || !range.from || !range.to) return false;
+
+  return (
+    range.from &&
+    range.to &&
+    datesArr.some((date) =>
+      isWithinInterval(date, {
+        start: range.from as Date,
+        end: range.to as Date,
+      })
+    )
+  );
+}
 
 
-  // CHANGE - idealmente esses valores devem vir do cabin e cálculos reais
-  const regularPrice = cabin?.regularPrice || 23;
-  const discount = cabin?.discount || 23;
-  const numNights = 23;
-  const cabinPrice = 23;
 
-  // SETTINGS
+const DateSelector = ({ settings, cabin, bookedDates }: DateSelectorProps) => {
+  const { range, setRange, resetRange } = useReservationContext();
+
+  const displayRange = isAlreadyBooked(range, bookedDates)
+    ? { to: undefined, from: undefined }
+    : range;
+
+  const { regularPrice = 0, discount = 0 } = cabin;
+  const numNights = differenceInDays(
+    displayRange?.to || "",
+    displayRange?.from || ""
+  );
+  const cabinPrice = numNights * (regularPrice - discount);
   const { minBookingLength, maxBookingLength } = settings;
+
+
 
   return (
     <div className="flex flex-col justify-between">
-      <DayPicker
+     <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        onSelect={(range) =>
-          setRange({
-            from: range?.from ?? null,
-            to: range?.to ?? null,
-          })
-        }
-        selected={{
-          from: range.from ?? undefined,
-          to: range.to ?? undefined,
-        }}
+        onSelect={setRange}
+        selected={displayRange}
         min={minBookingLength + 1}
         max={maxBookingLength}
         fromMonth={new Date()}
@@ -48,9 +71,12 @@ const DateSelector = ({ settings, cabin }: DateSelectorProps) => {
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
-    
-        
+        disabled={(curDate) =>
+          isPast(curDate) ||
+          bookedDates.some((date) => isSameDay(date, curDate))
+        }
       />
+
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
         <div className="flex items-baseline gap-6">
           <p className="flex gap-2 items-baseline">
@@ -79,7 +105,7 @@ const DateSelector = ({ settings, cabin }: DateSelectorProps) => {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+       {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={resetRange}

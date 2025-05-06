@@ -94,11 +94,13 @@ export interface BookingsReservationType {
   startDate: string;
   endDate: string;
   numNights: number;
-  totalPrice: number;
-  cabinPrice: number;
-  extrasPrice?: number;
   numGuests: number;
-  cabins: { name: string; image: string };
+  totalPrice: number;
+  guestId: number;
+  cabinId?: number;
+  
+  status?: BookingStatus;
+  cabins: { name: string; image: string }; // Modificado para array
 }
 
 export interface BookingFilter {

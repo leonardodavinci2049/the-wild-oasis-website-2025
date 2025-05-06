@@ -4,7 +4,8 @@ import React, { Suspense } from "react";
 import Cabin from "./_components/Cabin";
 import Spinner from "@/Common_components/Spinner";
 import Reservation from "./_components/Reservation";
-import { ReservationProvider } from "../_context/ReservationContext";
+import ReservationContextProvider from "../_context/ReservationContext";
+
 
 export async function generateMetadata({
   params,
@@ -42,9 +43,9 @@ const page = async ({ params }: { params: { cabinId: string } }) => {
         </h2>
 
         <Suspense fallback={<Spinner />}>
-          <ReservationProvider>
+          <ReservationContextProvider>
             <Reservation cabin={cabin} />
-          </ReservationProvider>
+          </ReservationContextProvider>
         </Suspense>
       </div>
     </div>
