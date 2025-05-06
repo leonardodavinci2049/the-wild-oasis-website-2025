@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default async function Navigation() {
   const session = await auth();
-//  console.log("session", session);
+  //  console.log("session", session);
 
   return (
     <nav className="z-10 text-xl">
@@ -32,12 +32,14 @@ export default async function Navigation() {
               className="hover:text-accent-400 transition-colors flex items-center gap-4"
             >
               <Image
+                // Important to display google profile images
+                referrerPolicy="no-referrer"
                 className="h-8 rounded-full"
                 src={session.user.image}
                 alt={session.user.name || "User avatar"}
-                referrerPolicy="no-referrer"
                 width={32}
                 height={32}
+                unoptimized
               />
 
               <span>Guest area</span>
@@ -45,9 +47,18 @@ export default async function Navigation() {
           ) : (
             <Link
               href="/account"
-              className="hover:text-accent-400 transition-colors"
+               className="hover:text-accent-400 transition-colors flex items-center gap-4"
             >
-              Guest area
+              
+              <Image
+                className="h-8 rounded-full"
+                src="/default-avatar.png"
+                alt="User avatar"
+                referrerPolicy="no-referrer"
+                width={32}
+                height={32}
+              />
+              <span> Guest area</span>
             </Link>
           )}
         </li>

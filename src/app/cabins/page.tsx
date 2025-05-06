@@ -3,7 +3,8 @@ import CabinList from "./_components/CabinList";
 import Spinner from "@/Common_components/Spinner";
 import Filter from "./_components/Filter";
 import ReservationReminder from "./_components/ReservationReminder";
-import { ReservationProvider } from "./_context/ReservationContext";
+import ReservationContextProvider from "./_context/ReservationContext";
+
 
 export const metadata = {
   title: "cabins",
@@ -48,10 +49,10 @@ const page = async ({ searchParams }: PageProps) => {
       </div>
 
       <Suspense fallback={<Spinner />} key={filter}>
-        <ReservationProvider>
+        <ReservationContextProvider>
           <CabinList filter={filter} />
           <ReservationReminder />
-        </ReservationProvider>
+        </ReservationContextProvider>
       </Suspense>
     </div>
   );

@@ -8,3 +8,16 @@ export interface CabinType {
   description?: string | null | undefined
   image?: string | null;
 }
+
+export interface CabinReservationType {
+  id?: number | null;
+  created_at?: string;
+  name?: string;
+  maxCapacity?: number;
+  regularPrice?: number;
+
+  discount?: number;
+  description?: string | null | undefined
+  image?: string | null;
+}
+

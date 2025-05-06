@@ -1,6 +1,7 @@
 import { supabase } from "./supabase";
 import { eachDayOfInterval } from "date-fns";
 import {
+  BookingsReservationType,
   InsertBookingType,
   UpdateBookingType,
 } from "./types/booking/bookinsType";
@@ -20,7 +21,7 @@ export async function getBooking(id: number) {
   return data;
 }
 
-export async function getBookings(guestId: number) {
+export async function getBookings(guestId: string) {
   const { data, error } = await supabase
     .from("bookings")
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
@@ -35,10 +36,14 @@ export async function getBookings(guestId: number) {
     throw new Error("Bookings could not get loaded");
   }
 
-  return data;
+  let booking: BookingsReservationType[] = [];
+  // @ts-expect-error todo: temp solution ⏰
+  if (data) booking = data;
+
+  return booking;
 }
 
-export async function getBookedDatesByCabinId(cabinId: number) {
+export async function getBookedDatesByCabinId(cabinId: number): Promise<Date[]>  {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const todayISO = today.toISOString();

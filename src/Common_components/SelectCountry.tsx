@@ -7,7 +7,6 @@ import { getCountries } from "@/services/apiCountries";
 type SelectCountryProps = {
   defaultCountry: string;
   name: string;
-  flag2: string;
   id: string;
   className?: string;
 };
@@ -15,18 +14,16 @@ type SelectCountryProps = {
 async function SelectCountry({
   defaultCountry,
   name,
-  flag2,
   id,
   className,
 }: SelectCountryProps) {
-  const countries = await getCountries();
+  const countries: { name: string; flag: string }[] = await getCountries();
   const flag =
     countries.find(
       (country: { name: string; flag: string }) =>
         country.name === defaultCountry
-    )?.flag ?? flag2;
-
-  //  console.log("countries", countries);
+    )?.flag ?? "";
+ console.log("countriesxxxx", countries);
   return (
     <select
       name={name}
@@ -46,4 +43,3 @@ async function SelectCountry({
 }
 
 export default SelectCountry;
-

@@ -7,12 +7,11 @@ interface ReservationFormProps {
   cabin: CabinType;
   user: {
     name: string;
-    image: string;
+    image: string | undefined | null;
   };
 }
 
 const ReservationForm = ({ cabin, user }: ReservationFormProps) => {
-
   const { maxCapacity } = cabin;
 
   return (
@@ -21,16 +20,28 @@ const ReservationForm = ({ cabin, user }: ReservationFormProps) => {
         <p>Logged in as</p>
 
         <div className="flex gap-4 items-center">
-          <Image
-            // Important to display google profile images
-            referrerPolicy="no-referrer"
-            className="h-8 rounded-full"
-            src={user.image}
-            alt={user.name}
-            width={32}
-            height={32}
-            unoptimized
-          />
+          {user.image ? (
+            <Image
+              // Important to display google profile images
+              referrerPolicy="no-referrer"
+              className="h-8 rounded-full"
+              src={user.image}
+              alt={user.name}
+              width={32}
+              height={32}
+              unoptimized
+            />
+          ) : (
+            <Image
+              className="h-8 rounded-full"
+              src="/default-avatar.png"
+              alt="User avatar"
+              referrerPolicy="no-referrer"
+              width={32}
+              height={32}
+            />
+          )}
+
 
           <p>{user.name}</p>
         </div>
