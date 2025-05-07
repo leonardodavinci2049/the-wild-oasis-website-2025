@@ -103,6 +103,16 @@ export interface BookingsReservationType {
   cabins: { name: string; image: string }; // Modificado para array
 }
 
+export type BookingDataType = {
+  startDate: string | Date;
+  endDate: string | Date;
+  numNights: number;
+  cabinPrice: number;
+  cabinId: number;
+};
+
+
+
 export interface BookingFilter {
   field: string;
   value: string | number | boolean;

@@ -1,8 +1,6 @@
 // Let's imagine your colleague already built this component 😃
 
-import { getCountries } from "@/services/apiCountries";
-
-//import { getCountries } from "@/services/apiCountries";
+import { countries } from "@/data/countries";
 
 type SelectCountryProps = {
   defaultCountry: string;
@@ -11,19 +9,20 @@ type SelectCountryProps = {
   className?: string;
 };
 
-async function SelectCountry({
+function SelectCountry({
   defaultCountry,
   name,
   id,
   className,
 }: SelectCountryProps) {
-  const countries: { name: string; flag: string }[] = await getCountries();
+  // Agora usando os dados locais em vez de fazer uma chamada de API
+  // Removido o "await" já que não é mais uma função assíncrona
   const flag =
     countries.find(
       (country: { name: string; flag: string }) =>
         country.name === defaultCountry
     )?.flag ?? "";
- console.log("countriesxxxx", countries);
+
   return (
     <select
       name={name}

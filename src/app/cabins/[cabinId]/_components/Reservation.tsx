@@ -27,6 +27,7 @@ const Reservation = async ({ cabin }: { cabin: CabinReservationType }) => {
         bookedDates={bookedDates}
         cabin={cabin}
       />
+      
 
       {session?.user ? (
         <ReservationForm

@@ -4,7 +4,7 @@ import {
   BookingsReservationType,
   InsertBookingType,
   UpdateBookingType,
-} from "./types/booking/bookinsType";
+} from "./types/booking/bookingsType";
 
 export async function getBooking(id: number) {
   const { data, error } = await supabase
@@ -43,7 +43,9 @@ export async function getBookings(guestId: string) {
   return booking;
 }
 
-export async function getBookedDatesByCabinId(cabinId: number): Promise<Date[]>  {
+export async function getBookedDatesByCabinId(
+  cabinId: number
+): Promise<Date[]> {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const todayISO = today.toISOString();

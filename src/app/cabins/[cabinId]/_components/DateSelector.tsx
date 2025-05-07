@@ -47,7 +47,7 @@ const DateSelector = ({ settings, cabin, bookedDates }: DateSelectorProps) => {
     ? { to: undefined, from: undefined }
     : range;
 
-  const { regularPrice = 0, discount = 0 } = cabin;
+  const { regularPrice = 23, discount = 23 } = cabin;
   const numNights = differenceInDays(
     displayRange?.to || "",
     displayRange?.from || ""
