@@ -39,7 +39,7 @@ const authConfig: NextAuthConfig = {
       return !!auth?.user;
     },
 
-    async signIn({ user, account, profile }) {
+    async signIn({ user}) {
       try {
         if (!user.email) return false;
         const existingGuest = await getGuest(user.email);
@@ -56,7 +56,7 @@ const authConfig: NextAuthConfig = {
       }
     },
 
-    async session({ session, user }) {
+    async session({ session }) {
       const guest = await getGuest(session.user.email);
       session.user.guestId = guest.id;
       return session;
