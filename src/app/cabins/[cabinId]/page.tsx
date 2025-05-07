@@ -7,11 +7,7 @@ import Reservation from "./_components/Reservation";
 import ReservationContextProvider from "../_context/ReservationContext";
 
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ cabinId: string }>;
-}) {
+export async function generateMetadata({ params }: {  params: Promise<{ cabinId: string }>;}) {
   const { cabinId } = await params;
   const { name } = await getCabin(Number(cabinId));
   return { title: `Cabin ${name}` };
