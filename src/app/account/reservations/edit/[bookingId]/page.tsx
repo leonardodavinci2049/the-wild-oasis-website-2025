@@ -3,15 +3,20 @@ import { updateReservation } from "@/services/actions";
 import { getBooking } from "@/services/apiBooking";
 import { getCabin } from "@/services/apiCabins";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ bookingId: string }>;
-}) {
-  const { bookingId } = await params;
-  const { numGuests, observations, cabinId } = await getBooking(+bookingId);
 
-  const { maxCapacity } = await getCabin(cabinId ?? 0);
+
+interface PageProps {
+  params: {
+    bookingId: string;
+  };
+}
+
+export default async function Page({ params }: PageProps) {
+ const { bookingId } = await params
+
+  const { numGuests, observations, cabinId } = await getBooking(+bookingId);
+  
+  const { maxCapacity } = await getCabin(cabinId);
 
   return (
     <div>
