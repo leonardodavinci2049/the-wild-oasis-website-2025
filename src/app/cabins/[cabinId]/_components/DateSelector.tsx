@@ -2,6 +2,7 @@
 
 
 import { DateRange, DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 
 import {
@@ -39,7 +40,6 @@ function isAlreadyBooked(range: DateRange | undefined, datesArr: Date[]) {
 }
 
 
-
 const DateSelector = ({ settings, cabin, bookedDates }: DateSelectorProps) => {
   const { range, setRange, resetRange } = useReservationContext();
 
@@ -57,9 +57,9 @@ const DateSelector = ({ settings, cabin, bookedDates }: DateSelectorProps) => {
 
 
 
-  return (
+return (
     <div className="flex flex-col justify-between">
-     <DayPicker
+      <DayPicker
         className="pt-12 place-self-center"
         mode="range"
         onSelect={setRange}

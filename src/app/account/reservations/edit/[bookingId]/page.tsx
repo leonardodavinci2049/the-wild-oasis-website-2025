@@ -5,11 +5,16 @@ import { getCabin } from "@/services/apiCabins";
 
 
 interface PageProps {
-  params: { bookingId: string };
+  params: { bookingId?: string }
 }
 
 export default async function Page({ params }: PageProps) {
-  const { bookingId } = params;
+  // Aguarde os parâmetros primeiro
+  const resolvedParams = await params;
+  const bookingId = resolvedParams?.bookingId;
+  if (!bookingId) return <div>not found</div>;
+
+
   const { numGuests, observations, cabinId } = await getBooking(Number(bookingId));
   const { maxCapacity } = await getCabin(cabinId);
 
