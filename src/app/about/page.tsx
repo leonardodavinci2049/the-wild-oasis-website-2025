@@ -40,14 +40,13 @@ const page = async () => {
             feel the joy of being together in a beautiful setting.
           </p>
         </div>
-      </div>
-
-      <div className="relative h-full col-span-2">
+      </div>      <div className="relative h-full col-span-2">
         <Image
           src="/images/about-1.jpg"
           alt="Family sitting around a fire pit in front of cabin"
           quality={80}
           fill
+          sizes="(max-width: 768px) 100vw, 40vw"
           className="object-cover"
         />
       </div>
@@ -56,6 +55,7 @@ const page = async () => {
         <Image
           src="/images/about-2.jpg"
           fill
+          sizes="(max-width: 768px) 100vw, 40vw"
           className="object-cover"
           alt="Family that manages The Wild Oasis"
         />

@@ -17,11 +17,11 @@ const Cabin = ({
 }: CabinProps) => {
   return (
     <div className="max-w-6xl mx-auto mt-8">
-      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
-        <div className="relative scale-[1.15] -translate-x-3">
+      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">        <div className="relative scale-[1.15] -translate-x-3">
           <Image
             src={image}
             fill
+            sizes="(max-width: 768px) 100vw, 40vw"
             className="object-cover"
             alt={`Cabin ${name}`}
           />

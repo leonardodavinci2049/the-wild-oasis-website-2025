@@ -1,12 +1,16 @@
 "use client";
 import { useOptimistic } from "react";
 import ReservationCard from "./ReservationCard";
-import { BookingsReservationType } from "@/services/types/booking/bookinsType";
-import { deleteBooking } from "@/services/apiBooking";
+import { BookingsReservationType } from "@/services/types/booking/bookingsType";
+import { deleteReservation } from "@/services/actions";
+
+function ReservationList({
+  bookings,
+}: {
+  bookings: BookingsReservationType[];
+}) {
 
 
-
-function ReservationList({ bookings }: { bookings: BookingsReservationType[] }) {
   const [optimisticBookings, optimisticDelete] = useOptimistic(
     bookings,
     (curBookings, bookingId) => {
@@ -14,11 +18,11 @@ function ReservationList({ bookings }: { bookings: BookingsReservationType[] }) 
     }
   );
 
-  async function handleDelete(bookingId: number) {
+  async function handleDelete(bookingId: string) {
     optimisticDelete(bookingId);
-    await deleteBooking(bookingId);
+    await deleteReservation(bookingId);
   }
-  
+
 
   return (
     <ul className="space-y-6">
@@ -27,6 +31,7 @@ function ReservationList({ bookings }: { bookings: BookingsReservationType[] }) 
           booking={booking}
           onDelete={handleDelete}
           key={booking.id}
+          
         />
       ))}
     </ul>

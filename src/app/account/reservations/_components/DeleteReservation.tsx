@@ -1,17 +1,22 @@
+"use client";
+
 import { useTransition } from "react";
 import { TrashIcon } from '@heroicons/react/24/solid';
 import SpinnerMini from "@/Common_components/SpinnerMini";
+
+
 type DeleteReservationProps = {
-  bookingId: string | number;
-   onDelete: (bookingId: number) => void; // or number, depending on your data model
+  bookingId: string ;
+   onDelete: (bookingId: string) => void; // or number, depending on your data model
 };
 
 function DeleteReservation({ bookingId, onDelete }: DeleteReservationProps) {
+  //Gerenciar estados de transição durante operações que podem demorar, sem bloquear a interface do usuário.
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {
     if (confirm("Are you sure you want to delete this reservation?"))
-      startTransition(() => onDelete(Number(bookingId)));
+      startTransition(() => onDelete(bookingId));
   }
 
   return (
